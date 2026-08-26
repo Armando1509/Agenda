@@ -1,28 +1,35 @@
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
-import { useState } from 'react';
+import { Calendar } from "react-native-calendars";
+import { useState } from "react";
+import { useRouter, Href } from "expo-router";
 
-
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 
 export default function CalendarioScreen() {
-
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-
+  const [selectedDate, setSelectedDate] = useState<{dateString: string}>({dateString: ""});
+  const router = useRouter();
+  console.log("esto es lo que me esta arrojando", selectedDate);
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="default">Aquí puedes ver tu calendario y tus eventos.</ThemedText>
+      <ThemedText type="default">
+        Aquí puedes ver tu calendario y tus eventos.
+      </ThemedText>
       <Calendar
-      onDayPress={day => {
-        /* console.log('selected day', day); */
-        setSelectedDate(day.dateString);
-        console.log('esto es lo que me esta arrojando', selectedDate);
-      }}
+        onDayPress={(day) => {
+          
+          
+          setSelectedDate(day)
+          router.push(`/citas/${day.dateString}`as Href)
+        }}
+        
       />
+      <ThemedText type="default">
+        Aqui esta la fecha en objeto: {JSON.stringify(selectedDate)}
+      </ThemedText>
+      <ThemedText type="default"> Aqui esta la pura fecha: {selectedDate.dateString} </ThemedText>
     </ThemedView>
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -30,7 +37,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-      },
-  
+  },
 });
-
