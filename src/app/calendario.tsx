@@ -9,7 +9,7 @@ import { ThemedView } from "@/components/themed-view";
 export default function CalendarioScreen() {
   const [selectedDate, setSelectedDate] = useState<{dateString: string}>({dateString: ""});
   const router = useRouter();
-  console.log("esto es lo que me esta arrojando", selectedDate);
+  
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="default">
